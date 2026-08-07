@@ -1,16 +1,16 @@
 # ComfyUI Text Placeholder Randomizer
 
-A small ComfyUI custom node: replaces `$1`, `$2`, `$3` placeholders in a text
-string with a random term picked from up to 5 comma-separated candidates per
-placeholder.
+A small ComfyUI custom node: replaces `$1`-`$5` placeholders in a text
+string with a random term picked from a comma-separated (any number of
+terms) candidate list per placeholder.
 
-## Node: Random Term Replace ($1 $2 $3)
+## Node: Random Term Replace ($1-$5)
 
 **Inputs**
 
-- `text` — the text containing `$1`, `$2`, `$3` placeholders
-- `terms_1`, `terms_2`, `terms_3` — comma-separated candidate terms for each
-  placeholder (max 5 used per list; extras are ignored)
+- `text` — the text containing `$1`-`$5` placeholders
+- `terms_1`-`terms_5` — comma-separated candidate terms for each placeholder
+  (any number of terms)
 - `seed` — controls which term is picked; same seed + same terms always
   produces the same result
 
