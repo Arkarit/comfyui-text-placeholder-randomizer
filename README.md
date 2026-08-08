@@ -25,6 +25,8 @@ terms) candidate list per placeholder.
 - `text` — the input text with each placeholder replaced by one randomly
   chosen term from its list. A placeholder with an empty terms list is left
   unchanged.
+- A read-only `preview` widget on the node itself shows the last result, so
+  you don't need a separate preview/text-display node downstream.
 
 ## Install
 

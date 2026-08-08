@@ -17,8 +17,10 @@ class TextPlaceholderRandomizer:
         "start_index lets you chain several of these nodes: e.g. one node "
         "covering $1-$5, a second with start_index=6 covering $6-$10. Same "
         "seed + same terms always picks the same term. A placeholder with "
-        "an empty terms list is left unchanged."
+        "an empty terms list is left unchanged. Shows the result in a "
+        "read-only preview widget on the node itself."
     )
+    OUTPUT_NODE = True
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -47,7 +49,13 @@ class TextPlaceholderRandomizer:
                     "default": 0, "min": 0, "max": 0xFFFFFFFFFFFFFFFF,
                     "tooltip": "Controls which term is picked. Same seed + same terms always gives the same result.",
                 }),
-            }
+            },
+            "optional": {
+                "preview": ("STRING", {
+                    "multiline": True, "default": "",
+                    "tooltip": "Read-only preview of the last result. Not an input; updates after each run.",
+                }),
+            },
         }
 
     RETURN_TYPES = ("STRING",)
@@ -55,7 +63,7 @@ class TextPlaceholderRandomizer:
     FUNCTION = "replace"
     CATEGORY = "text"
 
-    def replace(self, text, search_string, start_index, terms_1, terms_2, terms_3, terms_4, terms_5, seed):
+    def replace(self, text, search_string, start_index, terms_1, terms_2, terms_3, terms_4, terms_5, seed, preview=""):
         rng = random.Random(seed)
         result = text
         terms_fields = (terms_1, terms_2, terms_3, terms_4, terms_5)
@@ -64,7 +72,7 @@ class TextPlaceholderRandomizer:
             terms = [t.strip() for t in terms_field.split(",") if t.strip()]
             if terms:
                 result = result.replace(placeholder, rng.choice(terms))
-        return (result,)
+        return {"ui": {"text": [result]}, "result": (result,)}
 
 
 NODE_CLASS_MAPPINGS = {
