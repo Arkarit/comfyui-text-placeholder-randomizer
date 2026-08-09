@@ -28,8 +28,13 @@ function updateTextWidgetHeight(node) {
 		textWidget.options.getMaxHeight = () => TEXT_WIDGET_MAX_HEIGHT;
 	}
 	requestAnimationFrame(() => {
-		const sz = node.computeSize();
-		node.setSize?.(sz);
+		// Grow to fit the new min size if needed, but never shrink — this
+		// must not clobber a saved/user-set node size (e.g. right after a
+		// workflow loads and onConfigure already restored it).
+		const minSize = node.computeSize();
+		if (node.size[0] < minSize[0] || node.size[1] < minSize[1]) {
+			node.setSize([Math.max(node.size[0], minSize[0]), Math.max(node.size[1], minSize[1])]);
+		}
 		node.graph?.setDirtyCanvas(true, true);
 	});
 }
