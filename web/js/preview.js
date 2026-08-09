@@ -35,9 +35,9 @@ function updateTextWidgetHeight(node) {
 }
 
 app.registerExtension({
-	name: "TextPlaceholderRandomizer.Preview",
+	name: "RandomCSVTextReplace.Preview",
 	async beforeRegisterNodeDef(nodeType, nodeData, app) {
-		if (nodeData.name !== "TextPlaceholderRandomizer") {
+		if (nodeData.name !== "RandomCSVTextReplace") {
 			return;
 		}
 
